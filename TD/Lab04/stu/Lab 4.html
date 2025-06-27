@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>Lab 4</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="lab-4">Lab 4</h1>
+<h2 id="task-1-指针基本特性">Task 1: 指针基本特性</h2>
+<ul>
+<li>类型是分配内存块大小的别名，即类型（int,double,char）的作用就是分配相对应大小的内存并给程序员一个名字（int,double,char）方便操作。</li>
+<li>指针也是一种数据类型，定义时可以对其赋值（可赋任意地址值，但习惯赋值为NULL，方便操作管理）。</li>
+<li>C语言允许对NULL地址操作，而不会产生错误或者任何效果。</li>
+<li>在C语言中, sizeof() 是一个判断数据类型或者表达式长度的运算符。sizeof并不是函数，而是一种编译指令，对sizeof的求值发生在编译器。</li>
+</ul>
+<p>编写程序，查看 int, double, char 型指针的长度。（<code>task1.c</code>）</p>
+<h2 id="task-2-指针数组">Task 2: 指针数组</h2>
+<p>本示例代码见 <code>task2.c</code> 。</p>
+<p><code>char *a[]={&quot;Hello&quot;,&quot;GNUC&quot;,&quot;world&quot;};</code></p>
+<ul>
+<li><code>char *a[]</code> ：表示a是数组，数组中的元素是指针，指向char类型。数组里面所有的元素是连续的内存存放的。</li>
+<li>数组名是数组第一个字节的内存地址，并且数组名a也表示指针。a并不表示a地址存储的内容, 而是a地址本身。</li>
+<li>我们注意到，因为a的元素是char指针, 所需要的空间为8字节(64位内存地址)，那么：
+<ul>
+<li><code>a+1</code>：表示a的第二个元素（char 指针）的内存地址, 所以是加 8 字节；</li>
+<li><code>*(a+1)</code>：则表示a这个数组的第二个元素的内容 (是个char 类型的指针，本例表示为GNUC字符串的地址)；</li>
+<li><code>*(*(a+1))</code>：则表示a这个数组的第二个元素的内容(char指针)所指向的内容(G字符)；</li>
+<li><code>char * a[3]</code>：表示限定这个数组最多可存放3个元素(char指针), 也就是说这个数组占用3*8 = 24字节;</li>
+</ul>
+</li>
+</ul>
+<p>思考：<code>a[0]+1</code> 和 <code>a+1</code>是同一件事吗？请做做实验试试看。</p>
+<pre><code class="language-c"><span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%c\n&quot;</span>,*(a[<span class="hljs-number">0</span>]+<span class="hljs-number">1</span>));   <span class="hljs-comment">//! e</span>
+<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%s\n&quot;</span>,*(a+<span class="hljs-number">1</span>));      <span class="hljs-comment">//! GNUC</span>
+</code></pre>
+<h3 id="task-21">Task 2.1</h3>
+<p>分析下面代码输出情况。</p>
+<pre><code class="language-c"><span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;a[0]:       %p\n&quot;</span>,(a[<span class="hljs-number">0</span>]));      <span class="hljs-comment">//!</span>
+<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;a[0]+1:     %p\n&quot;</span>,(a[<span class="hljs-number">0</span>]+<span class="hljs-number">1</span>));    <span class="hljs-comment">//!</span>
+<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;a[1]:       %p\n&quot;</span>,(a[<span class="hljs-number">1</span>]));      <span class="hljs-comment">//!</span>
+<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;(a+1)[0]:   %p\n&quot;</span>,(a+<span class="hljs-number">1</span>)[<span class="hljs-number">0</span>]);    <span class="hljs-comment">//!</span>
+<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;a:          %p\n&quot;</span>,(a));         <span class="hljs-comment">//!</span>
+<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;a+1:        %p\n&quot;</span>,(a+<span class="hljs-number">1</span>));       <span class="hljs-comment">//!</span>
+</code></pre>
+<h3 id="task-22">Task 2.2</h3>
+<p>填写对应的缺失值，使得输出指定字符。</p>
+<pre><code class="language-c"><span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%s\n&quot;</span>,      );      <span class="hljs-comment">//! Hello</span>
+<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%s\n&quot;</span>,      );      <span class="hljs-comment">//! Hello</span>
+
+<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%s\n&quot;</span>,      );      <span class="hljs-comment">//! ello</span>
+<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%s\n&quot;</span>,      );      <span class="hljs-comment">//! ello</span>
+
+<span class="hljs-comment">// remind:              </span>
+<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%s\n&quot;</span>,      );      <span class="hljs-comment">//! GNUC</span>
+<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%s\n&quot;</span>,      );      <span class="hljs-comment">//! GNUC</span>
+<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%c\n&quot;</span>,      );      <span class="hljs-comment">//! G</span>
+
+<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%c\n&quot;</span>,      );      <span class="hljs-comment">//! d</span>
+<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%c\n&quot;</span>,      );      <span class="hljs-comment">//! d</span>
+</code></pre>
+<h2 id="task-3-洗牌发牌例子">Task 3: 洗牌发牌例子</h2>
+<p>下面是一个洗牌发牌的程序案例（<code>task3.c</code>）：</p>
+<pre><code class="language-c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdlib.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;time.h&gt;</span></span>
+
+<span class="hljs-type">void</span> <span class="hljs-title function_">shuffle</span><span class="hljs-params">(<span class="hljs-type">int</span>[][<span class="hljs-number">13</span>])</span>;
+<span class="hljs-type">void</span> <span class="hljs-title function_">deal</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">int</span>[][<span class="hljs-number">13</span>], <span class="hljs-type">const</span> <span class="hljs-type">char</span> *[], <span class="hljs-type">const</span> <span class="hljs-type">char</span> *[])</span>;
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span>
+{
+    <span class="hljs-type">const</span> <span class="hljs-type">char</span> *suit[<span class="hljs-number">4</span>] = {<span class="hljs-string">&quot;Hearts&quot;</span>, <span class="hljs-string">&quot;Diamonds&quot;</span>, <span class="hljs-string">&quot;Clubs&quot;</span>, <span class="hljs-string">&quot;Spades&quot;</span>};
+    <span class="hljs-type">const</span> <span class="hljs-type">char</span> *face[<span class="hljs-number">13</span>] = {<span class="hljs-string">&quot;Ace&quot;</span>, <span class="hljs-string">&quot;Deuce&quot;</span>, <span class="hljs-string">&quot;Three&quot;</span>, <span class="hljs-string">&quot;Four&quot;</span>,
+                            <span class="hljs-string">&quot;Five&quot;</span>, <span class="hljs-string">&quot;Six&quot;</span>, <span class="hljs-string">&quot;Seven&quot;</span>, <span class="hljs-string">&quot;Eight&quot;</span>,
+                            <span class="hljs-string">&quot;Nine&quot;</span>, <span class="hljs-string">&quot;Ten&quot;</span>, <span class="hljs-string">&quot;Jack&quot;</span>, <span class="hljs-string">&quot;Queen&quot;</span>, <span class="hljs-string">&quot;King&quot;</span>};
+    <span class="hljs-type">int</span> deck[<span class="hljs-number">4</span>][<span class="hljs-number">13</span>] = {<span class="hljs-number">0</span>};
+
+    srand(time(<span class="hljs-number">0</span>));
+
+    shuffle(deck);
+    deal(deck, face, suit);
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+
+<span class="hljs-type">void</span> <span class="hljs-title function_">shuffle</span><span class="hljs-params">(<span class="hljs-type">int</span> wDeck[][<span class="hljs-number">13</span>])</span>   <span class="hljs-comment">// Q1-4</span>
+{
+    <span class="hljs-type">int</span> row, column, card;
+
+    <span class="hljs-keyword">for</span> (card = <span class="hljs-number">1</span>; card &lt;= <span class="hljs-number">52</span>; card++)
+    {
+        <span class="hljs-keyword">do</span>
+        {
+            row = rand() % <span class="hljs-number">4</span>;
+            column = rand() % <span class="hljs-number">13</span>;
+        } <span class="hljs-keyword">while</span> (wDeck[row][column] != <span class="hljs-number">0</span>);
+
+        wDeck[row][column] = card;
+    }
+}
+
+<span class="hljs-type">void</span> <span class="hljs-title function_">deal</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">int</span> wDeck[][<span class="hljs-number">13</span>], <span class="hljs-type">const</span> <span class="hljs-type">char</span> *wFace[], <span class="hljs-type">const</span> <span class="hljs-type">char</span> *wSuit[])</span>  <span class="hljs-comment">// Q5-6</span>
+{
+    <span class="hljs-type">int</span> card, row, column;
+
+    <span class="hljs-keyword">for</span> (card = <span class="hljs-number">1</span>; card &lt;= <span class="hljs-number">52</span>; card++)
+        <span class="hljs-keyword">for</span> (row = <span class="hljs-number">0</span>; row &lt;= <span class="hljs-number">3</span>; row++)
+            <span class="hljs-keyword">for</span> (column = <span class="hljs-number">0</span>; column &lt;= <span class="hljs-number">12</span>; column++)
+                <span class="hljs-keyword">if</span> (wDeck[row][column] == card)
+                    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%5s of %-8s%c&quot;</span>,
+                           wFace[column], wSuit[row],
+                           card % <span class="hljs-number">2</span> == <span class="hljs-number">0</span> ? <span class="hljs-string">&#x27;\n&#x27;</span> : <span class="hljs-string">&#x27;\t&#x27;</span>);
+}
+</code></pre>
+<p>Q1: <code>shuffle</code> 函数的参数 <code>int wDeck[][13]</code> 是什么意思？</p>
+<p>Q2: <code>int wDeck[][13]</code> 还可以写成什么形式？</p>
+<p>Q3: 为什么不直接使用 <code>int wDeck[4][13]</code> 作为参数？</p>
+<p>Q4: <code>shuffle</code> 函数洗牌的原理是什么？</p>
+<p>Q5: <code>deal</code> 函数的参数 <code>const int wDeck[][13], const char *wFace[], const char *wSuit[]</code> 中出现了三个const。这三个const的作用是什么？</p>
+<p>Q6: 如果希望指针本身指向的地址保持不变，但是指针指向的值可以修改，应该如何声明？</p>
+<h2 id="task-4-函数指针">Task 4: 函数指针</h2>
+<p>函数指针：函数在编译时被分配的入口地址,用函数名表示。</p>
+<p>函数指针指向的是程序代码存储区。</p>
+<p>用函数指针变量调用函数。</p>
+<p>函数指针变量定义形式：</p>
+<ol>
+<li><code>数据类型 (*指针变量名)( );</code>  如 <code>int (*p)( )</code></li>
+<li>函数指针变量赋值：如 <code>p=max</code></li>
+<li>函数调用形式： <code>c=max(a,b); c=(*p)(a,b);</code></li>
+<li>注意：对函数指针变量 <code>p±n</code> , <code>p++</code> , <code>p--</code> 无意义</li>
+</ol>
+<p>求a和b中的最大者，使用以下几种方法：</p>
+<h3 id="task-41">Task 4.1</h3>
+<p>一般方法。（<code>task4_1.c</code>）</p>
+<pre><code class="language-c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">max</span><span class="hljs-params">(<span class="hljs-type">int</span>, <span class="hljs-type">int</span>)</span>;
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span>
+{
+    <span class="hljs-type">int</span> a, b, c;
+    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d %d&quot;</span>, &amp;a, &amp;b);
+    c = max(a, b);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;a=%d,b=%d,max=%d\n&quot;</span>, a, b, c);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">max</span><span class="hljs-params">(<span class="hljs-type">int</span> x, <span class="hljs-type">int</span> y)</span>
+{
+    <span class="hljs-type">int</span> max_number;
+    <span class="hljs-comment">// TODO</span>
+
+    <span class="hljs-keyword">return</span> max_number;
+}
+</code></pre>
+<h3 id="task-42">Task 4.2</h3>
+<p>通过指针变量访问函数（<code>task4_2.c</code>）</p>
+<pre><code class="language-c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">max</span><span class="hljs-params">(<span class="hljs-type">int</span>, <span class="hljs-type">int</span>)</span>;
+<span class="hljs-type">int</span> (*p)(<span class="hljs-type">int</span>, <span class="hljs-type">int</span>);
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span>
+{
+    <span class="hljs-type">int</span> a, b, c;
+    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d %d&quot;</span>, &amp;a, &amp;b);
+    <span class="hljs-comment">// TODO</span>
+
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;a=%d,b=%d,max=%d\n&quot;</span>, a, b, c);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">max</span><span class="hljs-params">(<span class="hljs-type">int</span> x, <span class="hljs-type">int</span> y)</span>
+{
+    <span class="hljs-type">int</span> max_number;
+    <span class="hljs-keyword">if</span> (x &gt; y)
+        max_number = x;
+    <span class="hljs-keyword">else</span>
+        max_number = y;
+    <span class="hljs-keyword">return</span> max_number;
+}
+</code></pre>
+<h3 id="task-43">Task 4.3</h3>
+<p>用函数指针变量作参数，求最大值、最小值和两数之和。（<code>task4_3.c</code>）</p>
+<p>函数指针变量通常用途是将指针作为参数传递到其他函数，实现对不同函数的调用。</p>
+<pre><code class="language-c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">max</span><span class="hljs-params">(<span class="hljs-type">int</span>, <span class="hljs-type">int</span>)</span>;
+<span class="hljs-type">int</span> <span class="hljs-title function_">min</span><span class="hljs-params">(<span class="hljs-type">int</span>, <span class="hljs-type">int</span>)</span>;
+<span class="hljs-type">int</span> <span class="hljs-title function_">add</span><span class="hljs-params">(<span class="hljs-type">int</span>, <span class="hljs-type">int</span>)</span>;
+<span class="hljs-type">int</span> <span class="hljs-title function_">process</span><span class="hljs-params">(<span class="hljs-type">int</span>, <span class="hljs-type">int</span>, <span class="hljs-type">int</span> (*fun)(<span class="hljs-type">int</span>, <span class="hljs-type">int</span>))</span>;
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span>
+{
+    <span class="hljs-type">int</span> a, b;
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;enter a and b:&quot;</span>);
+    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d %d&quot;</span>, &amp;a, &amp;b);
+    <span class="hljs-comment">// TODO</span>
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">process</span><span class="hljs-params">(<span class="hljs-type">int</span> x, <span class="hljs-type">int</span> y, <span class="hljs-type">int</span> (*fun)(<span class="hljs-type">int</span>, <span class="hljs-type">int</span>))</span>
+{
+    <span class="hljs-type">int</span> result;
+    result = (*fun)(x, y);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, result);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">max</span><span class="hljs-params">(<span class="hljs-type">int</span> x, <span class="hljs-type">int</span> y)</span>
+{
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;max=&quot;</span>);
+    <span class="hljs-keyword">return</span> (x &gt; y ? x : y);
+}
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">min</span><span class="hljs-params">(<span class="hljs-type">int</span> x, <span class="hljs-type">int</span> y)</span>
+{
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;min=&quot;</span>);
+    <span class="hljs-keyword">return</span> (x &lt; y ? x : y);
+}
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">add</span><span class="hljs-params">(<span class="hljs-type">int</span> x, <span class="hljs-type">int</span> y)</span>
+{
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;sum=&quot;</span>);
+    <span class="hljs-keyword">return</span> (x + y);
+}
+</code></pre>
+<h2 id="task-5-homework">Task 5: Homework</h2>
+<p>回忆一下上节课回文字符串判断函数，首次尝试了对字符串的操作。</p>
+<pre><code class="language-c"><span class="hljs-comment">//! 判断是否是 Palindrome array</span>
+<span class="hljs-type">int</span> <span class="hljs-title function_">isPalindromic</span><span class="hljs-params">(<span class="hljs-type">char</span> *arr, <span class="hljs-type">int</span> len)</span>
+{
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; len / <span class="hljs-number">2</span>; i++)
+    {
+        <span class="hljs-keyword">if</span> (arr[i] != arr[len - i - <span class="hljs-number">1</span>])
+        {
+            <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+        }
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+}
+</code></pre>
+<p>本节课，我们尝试用函数指针、字符串指针的知识，复现C语言中的strcpy()函数。</p>
+<p>strcpy()函数：是将一个字符串复制到另一块空间地址中的函数，<code>'\0'</code>是停止拷⻉的终止条件，同时也会将 <code>'\0'</code> 也复制到目标空间。</p>
+<p>The <code>strcpy</code> function copies <strong>strSource</strong>, including the terminating null character, to the location specified by <strong>strDestination</strong>. No overflow checking is performed when strings are copied or appended. The behavior of <code>strcpy</code> is undefined if the source and destination strings overlap.</p>
+<h3 id="task-51">Task 5.1</h3>
+<p>编程实现 <code>char *strcpy( char *strDestination, const char *strSource)</code> 。</p>
+<ul>
+<li><code>char *strDestination</code> : 目标地址；</li>
+<li><code>const char *strSource</code> : 源地址；</li>
+<li>返回值：操作成功，返回目标地址，否则返回NULL；</li>
+</ul>
+<p>尝试用自己编写的strcpy函数或内置函数试验下面的代码：</p>
+<p>（<code>task5.c</code>）</p>
+<pre><code class="language-c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span>
+{
+    <span class="hljs-type">char</span> buff[<span class="hljs-number">8</span>] = {<span class="hljs-number">0</span>};
+    <span class="hljs-type">char</span> *p = <span class="hljs-string">&quot;0123456789&quot;</span>;
+    <span class="hljs-built_in">strcpy</span>(buff, p);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%s\n&quot;</span>, buff);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p>检验是否发生缓冲区溢出，并分析原因。</p>
+<ul>
+<li><strong>缓冲区</strong>：是指程序运行期间，在内存中分配的一个连续的区域，用于保存包括字符数组在内的各种数据类型；</li>
+<li><strong>溢出</strong>：所填充的数据超出了原有的缓冲区边界，并非法占据了另一段内存区域；</li>
+<li><strong>缓冲区溢出与黑客攻击</strong>：由于填充数据越界而导致原有流程的改变，黑客借此精心构造填充数据，让程序转而执行特殊的代码，最终获取控制权；</li>
+</ul>
+<h3 id="task-52">Task 5.2</h3>
+<p>根据5.1的分析，升级 <code>strcpy</code> 函数到 <code>strncpy</code> ，修复缓冲区溢出bug。</p>
+<h2 id="作业要求">作业要求</h2>
+<ol>
+<li>提交代码
+<ul>
+<li>补全 Task 4：TODO部分的代码</li>
+<li>完成 Task 5：不需要scanf读取输入，在main函数中打印：
+<ol>
+<li>实现的 <code>strcpy</code> 的正常使用的case；</li>
+<li>缓冲区溢出的case；</li>
+<li><code>strncpy</code> 解决缓冲区溢出case后的结果；</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>提交报告
+<ul>
+<li>解释Task 5核心代码部分，分析bug原因以及解决方案。</li>
+</ul>
+</li>
+</ol>
+<h2 id="参考资料">参考资料</h2>
+<ul>
+<li>strcpy：<a href="https://blog.csdn.net/m0_62179366/article/details/123098864">https://blog.csdn.net/m0_62179366/article/details/123098864</a></li>
+<li>缓冲区溢出：<a href="https://blog.csdn.net/hyb612/article/details/83868330">https://blog.csdn.net/hyb612/article/details/83868330</a></li>
+<li>Strncpy：<a href="https://blog.csdn.net/m0_65601072/article/details/123974984">https://blog.csdn.net/m0_65601072/article/details/123974984</a></li>
+<li>缓冲区溢出攻击：
+<ul>
+<li><a href="https://blog.csdn.net/VN520/article/details/130283059">https://blog.csdn.net/VN520/article/details/130283059</a></li>
+<li><a href="https://baijiahao.baidu.com/s?id=1692690710869565236&amp;wfr=spider&amp;for=pc">https://baijiahao.baidu.com/s?id=1692690710869565236&amp;wfr=spider&amp;for=pc</a></li>
+</ul>
+</li>
+</ul>
+
+            
+            
+        </body>
+        </html>
